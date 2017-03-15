@@ -1,5 +1,5 @@
 Reveal.addEventListener('epoch', function(event) {
-    if(!this.initialized) {
+    if(!this.epochInitialized) {
         var updateTime = function(){
             document.getElementById("timeElapsed").innerHTML = Date.now();
         };
@@ -9,11 +9,11 @@ Reveal.addEventListener('epoch', function(event) {
             111
         );
     }
-    this.initialized = true;
+    this.epochInitialized = true;
 });
 
 Reveal.addEventListener('timezone', function(event) {
-    if(!this.initialized) {
+    if(!this.timezoneInitialized) {
         var getUTCOffset = function(timezone) {
             var offset = moment().tz(timezone).utcOffset();
             var offsetPrefix = offset < 0 ? '-': '+';
@@ -41,5 +41,5 @@ Reveal.addEventListener('timezone', function(event) {
             1000
         );
     }
-    this.initialized = true;
+    this.timezoneInitialized = true;
 });
