@@ -30,7 +30,7 @@
 					<p style="margin-top:30%">Bounkong Khamphousone <a href="http://twitter.com/tibounk">@tibounk</a></p>
 				</section>
 				<section data-state="intro">
-					<h2>Presentation</h2>
+					<h2>Présentation</h2>
 					<p>Développeur Java/JEE</p>
 					<p>Data Engineer</p>
 				</section>
@@ -84,170 +84,120 @@
 					</table>
 				</section>
 				<section>
-					<h2>Devoxx FR 2017 colors</h2>
-					<p>Live color chart here</p>
-					<p><a href="https://color.adobe.com/fr/DEvoxx-FR-2017-v3-color-theme-9311745/?">https://color.adobe.com/fr/DEvoxx-FR-2017-v3-color-theme-9311745/?</a></p>
+					<h2>Heure d'été (Paris)<br/>Daylight Saving Time</h2>
+					<table class="reveal" style="margin-top:7%">
+						<thead>
+							<tr>
+								<th>Année</th>
+								<th>Heure d'été</th>
+								<th>Heure d'hiver</th>
+							</tr>
+						</thead>
+						<tr>
+							<td>2017</td>
+							<td>Dimanche 26 mars</td>
+							<td>Dimanche 29 octobre</td>
+						</tr>
+						<tr>
+							<td>2018</td>
+							<td>Dimanche 25 mars</td>
+							<td>dimanche 28 octobre</td>
+						</tr>
+						<tr>
+							<td>2019</td>
+							<td>Dimanche 31 mars</td>
+							<td>Dimanche 27 octobre</td>
+						</tr>
+					</table>
+					<aside class="notes">
+						var d = new Date(1970, 8, 1);<br/>
+						JSON.stringify(d);
+					</aside>
 				</section>
 				<section>
-					<h3>&nbsp;</h3>
-					<p class="code">Show me some code !</p>
-					<p class="code">Try to keep a font size as big as possible. Remember also that too much code on one slide is useless. The audience reads this texte and does not listen to your presentation anymore. Try to split on different slides your presentation.</p>
+					<h2>ISO-8601</h2>
+					<p class="fragment" data-fragment-index="1">1980-07-31T23:00:00.000Z</p>
+					<p class="fragment" data-fragment-index="2">&lt;année&gt;-&lt;mois&gt;-&lt;jour&gt;T&lt;heure&gt;:&lt;min&gt;:&lt;sec&gt;.&lt;ms&gt;&lt;Timezone&gt;</p>
+					<p class="fragment" data-fragment-index="3">Pattern Java : yyyy-MM-dd'T'HH:mm:ss.SSSX</p>
+					<pre class="fragment" data-fragment-index="4"><code data-trim data-noescape>// Java 7+
+String dateStr = "1980-07-31T23:00:00.000Z";
+SimpleDateFormat formatterJ7 = 
+	new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+TimeZone tz = TimeZone.getTimeZone("Europe/Paris");
+formatterJ7.setTimeZone(tz);
+try {
+	Date dJ7 = formatterJ7.parse(dateStr);
+	System.out.println(dJ7);
+} catch (ParseException e) {
+	e.printStackTrace();
+}
+</code></pre>
+					<aside class="notes">
+						val dateStr = "1980-07-31T23:00:00.000Z"<br/>
+						val formatterJ7 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSX")<br/>
+						val tz = TimeZone.getTimeZone("Europe/Paris")<br/>
+						formatterJ7.setTimeZone(tz)<br/>
+						val dJ7 = formatterJ7.parse(dateStr)<br/>
+						println(dJ7)<br/>
+						<br/>
+						<br/>
+						val dJ8 = ZonedDateTime.parse(dateStr)<br/>
+						println(dJ8.toInstant.atZone(ZoneId.systemDefault()))
+					</aside>
 				</section>
 				<section>
-				<section data-transition="none">
-					<h3>Step 1 : add to Redis sorted set</h3>
-					<pre><code data-trim data-noescape>127.0.0.1:6363[2]> zadd hackers 1953 "Richard Stallman"
-(integer) 1
-127.0.0.1:6363[2]> 
-127.0.0.1:6363[2]> zadd hackers 1969 "Linus"
-(integer) 1
-127.0.0.1:6363[2]> zadd hackers 1912 "Alan turing" 
-(integer) 1</code></pre>
-				</section>
-				<section data-transition="none">
-					<h3>Step 2 : Show the list of Hackers</h3>
-					<pre><code data-trim data-noescape><mark>127.0.0.1:6363[2]> zadd hackers 1953 "Richard Stallman"
-(integer) 1
-127.0.0.1:6363[2]> 
-127.0.0.1:6363[2]> zadd hackers 1969 "Linus"
-(integer) 1
-127.0.0.1:6363[2]> zadd hackers 1912 "Alan turing" 
-(integer) 1</mark>
-127.0.0.1:6363[2]> zrange hackers 0 -1
-1) "Alan turing"
-2) "Richard Stallman"
-3) "Linus"</code></pre>
-				</section>
-				<section data-transition="none">
-					<h3>Step 3 : Show the list with score</h3>
-					<pre><code data-trim data-noescape><mark>127.0.0.1:6363[2]> zadd hackers 1953 "Richard Stallman"
-(integer) 1
-127.0.0.1:6363[2]> 
-127.0.0.1:6363[2]> zadd hackers 1969 "Linus"
-(integer) 1
-127.0.0.1:6363[2]> zadd hackers 1912 "Alan turing" 
-(integer) 1
-127.0.0.1:6363[2]> zrange hackers 0 -1
-1) "Alan turing"
-2) "Richard Stallman"
-3) "Linus"</mark>
-127.0.0.1:6363[2]> zrange hackers 0 -1 withscores
-1) "Alan turing"
-2) "1912"
-3) "Richard Stallman"
-4) "1953"
-5) "Linus"
-6) "1969"</code></pre>
-				</section>
-				<section data-transition="none">
-					<h3>Step 4 : Last step with transparent code</h3>
-					<pre><code data-trim data-noescape><mark>127.0.0.1:6363[2]> zadd hackers 1953 "Richard Stallman"
-(integer) 1
-127.0.0.1:6363[2]> 
-127.0.0.1:6363[2]> zadd hackers 1969 "Linus"
-(integer) 1
-127.0.0.1:6363[2]> zadd hackers 1912 "Alan turing" 
-(integer) 1
-127.0.0.1:6363[2]> zrange hackers 0 -1
-1) "Alan turing"
-2) "Richard Stallman"
-3) "Linus"
-127.0.0.1:6363[2]> zrange hackers 0 -1 withscores
-1) "Alan turing"
-2) "1912"
-3) "Richard Stallman"
-4) "1953"
-5) "Linus"
-6) "1969"</mark>
-127.0.0.1:6363[2]> zrangebyscore hackers 1910 1940
-1) "Alan turing"</code></pre>
-				</section>
-				</section>
-				<section data-state="flash" align="center">
-					<h1>Live demo</h1>
-				</section>
-				<section data-state="flash" align="center">
-					<h1>Merci / Thanks you</h1>
-				</section>
-				<section data-state="rightbanner">
-					<div style="width: 40%; display: inline-block; margin-right: 5%; text-align: center; margin-left: 10%">
-        				<h4>Facts</h4>
-						<p>Devoxx France 2017<br />
-						221 speakers with a bagde, 40 exhibitors<br />
-						and more than 2800 attendees</p><br/><br/><br/><br/>
-    				</div>
-    				<div style="width: 40%; display: inline-block;">
-        				<img data-src="../images/corner_02.png" width="80%" style="border: solid 5px white;"/>
-    				</div>
-				</section>
-				<section data-state="flash" align="center">
-					<h1>Less code is less bug</h1>
+					<h2>ISO 8601</h2>
+					<pre style="margin-top:15%"><code data-trim data-noescape>// Java 8+
+String dateStr = "1980-07-31T23:00:00.000Z";
+ZonedDateTime dJ8 = ZonedDateTime.parse(dateStr);
+System.out.println(dJ8.toInstant().atZone(ZoneId.systemDefault()));</code></pre>
 				</section>
 				<section>
-					<h4>Why less slides is better than more slides</h4>
+					<h2>Timezones de la date JS (ES5)</h2>
+					<p>
+						The implementation of ECMAScript should not <span class="fragment highlight-green" data-fragment-index="1">try to determine</span> whether the exact time was subject to daylight saving time but
+						just <span class="fragment highlight-green" data-fragment-index="1">whether daylight saving time would have been in effect</span> if the current daylight saving time algorithm had been used at the time.
+						This <span class="fragment highlight-green" data-fragment-index="1">avoids complications</span> such as taking into account the <span class="fragment highlight-green" data-fragment-index="1">years that the locale observed daylight saving time year round.</span></p>
+				</section>
+				<section>
+					<h2>Timezones de la date JS (ES2016)</h2>
+					<p>An implementation dependent algorithm using best available information on time zones to determine the local daylight saving time adjustment DaylightSavingTA(t), 
+						measured in milliseconds. An implementation of ECMAScript is expected to make its best effort to determine the local daylight saving time adjustment.</p>
+					<p><b>Note</b> : <span class="fragment highlight-green" data-fragment-index="1">It is recommended that implementations use the time zone information of the IANA Time Zone Database</span> http://www.iana.org/time-zones/.</p>
+				</section>
+				<section data-state="intro">
+					<h2>Démo client JS | serveur JVM</h2>
 					<ul>
-						<li>Devoxx France runs on 3 days</li>
-						<li>Audience loves live coding and demo</li>
-						<li>Too much bullet points is super boring</li>
-						<li>More text : less concentration from the audience that will just read your slides</li>
-						<li>So this is exactly what you should not do</li>
+						<li>Front : Angular 2
+							<ul>
+								<li>moment</li>
+							</ul>
+						</li>
+						<li>Back : Akka-http</li>
 					</ul>
+					moment.fn.toJSON
 				</section>
 				<section>
-					<h4>Pourquoi peu de diapositives c’est mieux</h4>
+					<h2>Démo client Java | serveur JS</h2>
 					<ul>
-						<li>Devoxx France se déroule sur 3 jours</li>
-						<li>Le public préfère les démonstrations et l’écriture de code en direct</li>
-						<li>Trop de points avec des puces c’est ennuyant</li>
-						<li>Si vos slides peuvent vous remplacer, alors vous ne servez à rien comme orateur</li>
-						<li>Imaginez que votre ensemble de diapos ne doivent pas pouvoir vivre sans vous, sans votre présentation et votre contenu</li>
-						<li>Merci donc de ne PAS faire comme ce slide à mourir</li>
+						<li>Front : Akka-http</li>
+						<li>Back : Node JS
+							<ul>
+								<li>Express</li>
+								<li>Body-parser</li>
+							</ul>
+						</li>
 					</ul>
-				</section>
-				<section>
-					<h4>Toujours plus d'image</h4>
-					<div style="width: 50%; display: inline-block; margin-right: 5%; text-align: center;">
-						<ul>
-							<li>Les diagrammes dynamiques c’est vraiment top</li><br/><br/><br/><br/>
-						</ul>
-    				</div>
-    				<div style="width: 40%; display: inline-block;">
-        				<img data-src="../images/corner_02.png" />
-    				</div>
-				</section>
-				<section>
-					<h2>Redis Set</h2>
-					<p>TODO</p>
-				</section>
-				<section>
-					<h2>Redis Set : French Selected Speakers</h2>
-					<p>TODO</p>
-				</section>
-				<section>
-					<h2>Screen capture</h2>
-					<img data-src="slide_20_screen_capture.jpg" style="width: 60%;margin-left:auto;margin-right:auto;display:block;" />
-					<p align="center" style="margin-top:-10px"><a href="https://cfp.devoxx.fr">https://cfp.devoxx.fr</a></p>
-				</section>
-				<section data-state="flash">
-						<h4>&nbsp;</h4>
-						<ul>
-							<li>Here are just a few photos from Devoxx France 2015 so that you get a better idea of what you’re about to live</li>
-							<li>Voici quelques photos de Devoxx France 2016 afin de vous donner une idée de ce que vous vous apprêtez à vivre...</li>
-						</ul>
-				</section>
-				<section data-state="fullimg" data-background="slide_22.jpg">
-				</section>
-				<section data-state="fullimg" data-background="slide_23.jpg" />
-				</section>
-				<section data-state="fullimg" data-background="slide_24.jpg" />
-				</section>
-				<section data-state="fullimg" data-background="slide_25.jpg" />
+					https://github.com/expressjs/body-parser/issues/17
 				</section>
 				<section data-state="intro">
 					<h1>Thanks</h1>
 					<p>Contribute and propose other templates on <a href="https://bitbucket.org/nicolas_martignole/devoxxfr_templates/overview
 ">https://bitbucket.org/nicolas_martignole/devoxxfr_templates/overview
 </a></p>
+					http://es5.github.io/#x15.9.1.8
+					http://www.ecma-international.org/ecma-262/7.0/index.html#sec-daylight-saving-time-adjustment
+					https://www.iana.org/time-zones
 				</section>
 			</div>
             <div class="footer">
