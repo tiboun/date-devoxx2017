@@ -7,6 +7,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import com.ebiznext.devoxx.json4s.JavaTimeSerializers
+import com.ebiznext.devoxx.model.MyForm
 import de.heikoseeberger.akkahttpjson4s.Json4sSupport
 import org.json4s.{DefaultFormats, Formats, Serialization, jackson}
 
@@ -35,5 +36,3 @@ object WebServer extends Json4sSupport {
     Http().bindAndHandle(route, "localhost", 8080)
   }
 }
-
-case class MyForm(email: String, password: String, birthdate: LocalDateTime)
