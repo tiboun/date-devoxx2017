@@ -29,14 +29,9 @@
 					<h1>Devoxx France 2017<br />L’enfer de l’objet Date JS</h1>
 					<p style="margin-top:30%">Bounkong Khamphousone <a href="http://twitter.com/tibounk">@tibounk</a></p>
 				</section>
-				<section data-state="intro">
-					<h2>Présentation</h2>
-					<p>Développeur Java/JEE</p>
-					<p>Data Engineer</p>
-				</section>
 				<section>
 					<h2>Problème</h2>
-					<img data-src="images/ebiznext/demo.jpg" width="49%" style="display:block;margin-left:auto;margin-right:auto;" />
+					<p style="margin-top:13%; font-size: 100px" align="center">Live Demo</p>
 					<aside class="notes">
 						Présentation du problème initial avec la date JS.
 					</aside>
@@ -84,7 +79,7 @@
 					</table>
 				</section>
 				<section>
-					<h2>Heure d'été (Paris)<br/>Daylight Saving Time</h2>
+					<h2>Heure d'été (Paris)<br/>Daylight Saving Time (DST)</h2>
 					<table class="reveal" style="margin-top:7%">
 						<thead>
 							<tr>
@@ -150,32 +145,44 @@ try {
 					<pre style="margin-top:15%"><code data-trim data-noescape>// Java 8+
 String dateStr = "1980-07-31T23:00:00.000Z";
 ZonedDateTime dJ8 = ZonedDateTime.parse(dateStr);
-System.out.println(dJ8.toInstant().atZone(ZoneId.systemDefault()));</code></pre>
+System.out.println(dJ8.withZoneSameInstant(ZoneId.systemDefault()));</code></pre>
 				</section>
 				<section>
-					<h2>Timezones de la date JS (ES5)</h2>
+					<h2>DST de la date JS (ES5)</h2>
 					<p>
-						The implementation of ECMAScript should not <span class="fragment highlight-green" data-fragment-index="1">try to determine</span> whether the exact time was subject to daylight saving time but
+						The implementation of ECMAScript should <span class="fragment highlight-green" data-fragment-index="1">not try to determine</span> whether the exact time was subject to daylight saving time but
 						just <span class="fragment highlight-green" data-fragment-index="1">whether daylight saving time would have been in effect</span> if the current daylight saving time algorithm had been used at the time.
 						This <span class="fragment highlight-green" data-fragment-index="1">avoids complications</span> such as taking into account the <span class="fragment highlight-green" data-fragment-index="1">years that the locale observed daylight saving time year round.</span></p>
 				</section>
 				<section>
-					<h2>Timezones de la date JS (ES2016)</h2>
+					<h2>DST de la date JS (ES2016)</h2>
 					<p>An implementation dependent algorithm using best available information on time zones to determine the local daylight saving time adjustment DaylightSavingTA(t), 
 						measured in milliseconds. An implementation of ECMAScript is expected to make its best effort to determine the local daylight saving time adjustment.</p>
 					<p><b>Note</b> : <span class="fragment highlight-green" data-fragment-index="1">It is recommended that implementations use the time zone information of the IANA Time Zone Database</span> http://www.iana.org/time-zones/.</p>
 				</section>
-				<section data-state="intro">
+				<section>
+					<h2>JSON.parse</h2>
+					<p style="margin-top:13%" class="fragment" data-fragment-index="1">JSON.parse("{'my':'json'}")</p>
+					<p class="fragment" data-fragment-index="2">JSON.parse(texte [, reviver])</p>
+				</section>
+				<section>
+					<h2>JSON.stringify</h2>
+					<p style="margin-top:13%" class="fragment" data-fragment-index="1">JSON.stringify({'my':'json'})</p>
+					<p class="fragment" data-fragment-index="2">JSON.stringify(value [, remplaçant [, espace]])</p>
+					<p class="fragment" data-fragment-index="3">&lt;objet&gt;.toJSON()</p>
+				</section>
+				<section>
 					<h2>Démo client JS | serveur JVM</h2>
 					<ul>
 						<li>Front : Angular 2
 							<ul>
 								<li>moment</li>
+								<li>moment-timezone</li>
+								<li>mydatepicker</li>
 							</ul>
 						</li>
 						<li>Back : Akka-http</li>
 					</ul>
-					moment.fn.toJSON
 				</section>
 				<section>
 					<h2>Démo client Java | serveur JS</h2>
@@ -183,21 +190,28 @@ System.out.println(dJ8.toInstant().atZone(ZoneId.systemDefault()));</code></pre>
 						<li>Front : Akka-http</li>
 						<li>Back : Node JS
 							<ul>
+								<li>moment</li>
+								<li>moment-timezone</li>
 								<li>Express</li>
 								<li>Body-parser</li>
 							</ul>
 						</li>
 					</ul>
-					https://github.com/expressjs/body-parser/issues/17
+				</section>
+				<section>
+					<h2>Pour en savoir plus</h2>
+					<ul>
+						<li><a href="http://es5.github.io/#x15.9.1.8">Spec ES5</a></li>
+						<li><a href="http://www.ecma-international.org/ecma-262/7.0/index.html#sec-daylight-saving-time-adjustment">ES2016</a></li>
+						<li><a href="https://www.iana.org/time-zones">IANA</a></li>
+						<li><a href="https://momentjs.com/">MomentJS</a></li>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON/parse">JSON.Parse</a></li>
+						<li><a href="https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/JSON/stringify">JSON.Stringify</a></li>
+					</ul>
 				</section>
 				<section data-state="intro">
-					<h1>Thanks</h1>
-					<p>Contribute and propose other templates on <a href="https://bitbucket.org/nicolas_martignole/devoxxfr_templates/overview
-">https://bitbucket.org/nicolas_martignole/devoxxfr_templates/overview
-</a></p>
-					http://es5.github.io/#x15.9.1.8
-					http://www.ecma-international.org/ecma-262/7.0/index.html#sec-daylight-saving-time-adjustment
-					https://www.iana.org/time-zones
+					<h1>Questions ?</h2>
+					<p style="margin-top:13%; text-align:center; font-size:50px">La présentation et les codes se trouvent sur github : <br/>https://github.com/tiboun/date-devoxx2017</p>
 				</section>
 			</div>
             <div class="footer">
