@@ -77,7 +77,7 @@ export class MyFormComponent {
   }
 
   onSubmit(value: any): void {
-    this.clientRequest = JSON.stringify(value);
-    this.myFormService.create(value).subscribe(value => this.serverResponse = JSON.stringify(value));
+    this.clientRequest = JSON.parse(JSON.stringify(value));
+    this.myFormService.create(value).subscribe(value => this.serverResponse = value);
   }
 }
