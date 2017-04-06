@@ -23,6 +23,7 @@ export class MyFormComponent {
   private defaultDate: Boolean;
   private lastSelectedDate: IMyDateModel;
   private serverResponse:String;
+  private clientRequest:String;
 
   private myDatePickerOptions: IMyOptions = {
     // other options...
@@ -60,7 +61,7 @@ export class MyFormComponent {
           month: this.lastSelectedDate.date.month - 1,
           day: this.lastSelectedDate.date.day
         };
-        this.birthdate.setValue(this.momentService.get().tz(momentDate, this.momentService.get().tz.guess()));
+        this.birthdate.setValue(this.momentService.get().tz(momentDate, this.momentService.get().tz.guess()).utc());
       }
     }
   }
@@ -76,6 +77,7 @@ export class MyFormComponent {
   }
 
   onSubmit(value: any): void {
+    this.clientRequest = JSON.stringify(value);
     this.myFormService.create(value).subscribe(value => this.serverResponse = JSON.stringify(value));
   }
 }
